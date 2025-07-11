@@ -1,0 +1,22 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ main, '*branch' ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Configure with CMake
+      run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
+
+    - name: Build project
+      run: cmake --build build --config Debug
+
+    - name: Run tests
+      run: build/Debug/main_test.exe
